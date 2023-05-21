@@ -24,13 +24,22 @@ public class AutoAppConfig {
         // 3. 참조값이 다른 것을 확인
         System.out.println("memberService1 = " + memberService1);
         System.out.println("memberService2 = " + memberService2);
-        /**
-         * 출력값 - 생성할 때마다 다른 객체( @c540f5a, @770c2e6b )가 생성됨 -> JVM 메모리에 계속 객체가 생성해서 올라가게 됨 -> 효율적X
-         * memberService1 = hello.core.member.MemberServiceImpl@c540f5a
-         * memberService2 = hello.core.member.MemberServiceImpl@770c2e6b
-         */
 
         // memberService1 != memberService2 인 경우 성공
         assertThat(memberService1).isNotSameAs(memberService2);
+    }
+
+    @Test
+    @DisplayName("싱글톤 패턴을 적용한 객체 사용")
+    void singletonServiceTest() {
+        SingletonService singletonService1 = SingletonService.getInstance();
+        SingletonService singletonService2 = SingletonService.getInstance();
+
+        System.out.println("singletonService1 = " + singletonService1);
+        System.out.println("singletonService2 = " + singletonService2);
+
+        // isSameAs : 주소값을 비교
+        // isEqualTo : 내용 자체(값)를 비교
+        assertThat(singletonService1).isSameAs(singletonService2);
     }
 }
